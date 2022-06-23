@@ -94,10 +94,10 @@ Here are some example snippets to help you get started creating a container.
 
 ```yaml
 ---
-version: "2.1"
+version: "2.4"
 services:
   transmission:
-    image: lscr.io/linuxserver/transmission:latest
+    image: docker.beardedtek.com/beardedtek-com/docker-transmission:latest
     container_name: transmission
     environment:
       - PUID=1000
@@ -109,10 +109,24 @@ services:
       - WHITELIST=iplist #optional
       - PEERPORT=peerport #optional
       - HOST_WHITELIST=dnsname list #optional
+      - TAILSCALE_AUTH_KEY= #optional - obtain from https://login.tailscale.com/admin/settings/keys
+      - TAILSCALE_HOSTNAME: #optional - no spaces
+      - TAILSCALE_TAGS: #optional - ex: tag:transmision - must be set in tailscale admin console
+      - TAILSCALE_ADVERTISE_ROUTE: #optional - set by init script, set here to override
+      - TAILSCALE_ENABLE: #optional - false to disable enabled by default
+      - TAILSCALE_EXIT_NODE: #optional - ip of tailscale exit node
     volumes:
+      - /dev/net/tun:/dev/net/tun #required for tailscale
       - /path/to/data:/config
       - /path/to/downloads:/downloads
       - /path/to/watch/folder:/watch
+    cap_add:
+      - net_admin #required for tailscale
+      - sys_module #required for tailscale
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=${TAILSCALE_IPV6_DISABLED:-1}  #required for tailscale
+      - net.ipv4.ip_forward=1 #required for tailscale
+      - net.ipv6.conf.all.forwarding=${TAILSCALE_IPV6_FORWARDING:-1} #required for tailscale
     ports:
       - 9091:9091
       - 51413:51413

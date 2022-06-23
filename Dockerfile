@@ -24,6 +24,7 @@ RUN \
     python3 \
     rsync \
     tar \
+    tailscale \
     transmission-cli \
     transmission-daemon \
     unzip && \
@@ -90,6 +91,9 @@ RUN \
   rm -rf \
     /root/.cache \
     /tmp/*
+
+# Add tailscale support
+
 
 # copy local files
 COPY root/ /

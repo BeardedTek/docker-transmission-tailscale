@@ -21,5 +21,17 @@ steps:
     experimental: true
     compress: true
     squash: true
-image_pull_secrets:
-  - docker-auth-beardedtek.com
+- name: dockerhub-PUSH
+  image: plugins/docker
+  when:
+    event:
+      - push
+  settings:
+    username: beardedtek
+    password:
+      from_secret: docker_password
+    repo: beardedtek/docker-transmission
+    tags: tailscale,latest,${DRONE_REPO_BRANCH}
+    experimental: true
+    compress: true
+    squash: true

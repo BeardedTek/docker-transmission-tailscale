@@ -1,5 +1,5 @@
 kind: pipeline
-name: beardedtek-docker-transmission
+name: beardedtek-transmission-tailscale
 trigger:
   branch:
     - master
@@ -15,7 +15,7 @@ steps:
     username: beardedtek
     password:
       from_secret: docker_password
-    repo: docker.beardedtek.com/beardedtek-com/docker-transmission
+    repo: docker.beardedtek.com/beardedtek/transmission-tailscale
     registry: docker.beardedtek.com
     tags: latest,${DRONE_REPO_BRANCH}
     experimental: true
@@ -30,8 +30,8 @@ steps:
     username: beardedtek
     password:
       from_secret: docker_password
-    repo: beardedtek/docker-transmission
-    tags: tailscale,latest,${DRONE_REPO_BRANCH}
+    repo: beardedtek/transmission-tailscale
+    tags: latest,${DRONE_REPO_BRANCH}
     experimental: true
     compress: true
     squash: true

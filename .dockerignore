@@ -4,3 +4,7 @@
 .gitattributes
 READMETEMPLATE.md
 README.md
+docker-compose.yml
+.env
+.drone.yml
+config
